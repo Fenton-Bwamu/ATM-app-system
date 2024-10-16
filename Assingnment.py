@@ -1,9 +1,22 @@
 # ATM-like System in Python
 
 def atm():
-    global balance  # Declare global to access and modify the balance
-    print("Welcome to KCB ATM")
-    print("Your balance is $%.2f" % balance)
+    # Ask for user name and initial balance during account creation
+    name = input("Please enter your name: ")
+    global balance
+    while True:
+        try:
+            balance = float(input("Please enter your initial balance: "))
+            if balance < 0:
+                print("Initial balance cannot be negative. Please try again.")
+                continue
+            break
+        except ValueError:
+            print("Invalid amount. Please enter a valid number.")
+
+    print(f"\nAccount created successfully for {name} with a balance of $%.2f!\n" % balance)
+
+    print(f"Welcome to KCB ATM, {name}!")
     print("What would you like to do today?")
 
     while True:
@@ -25,7 +38,7 @@ def atm():
         elif choice == 3:
             display_balance()
         elif choice == 4:
-            print("Thank you for using KCB ATM. Goodbye!")
+            print(f"Thank you for using KCB ATM, {name}. Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.")
@@ -35,7 +48,7 @@ def withdraw():
     try:
         amount = float(input("How much would you like to withdraw? "))
     except ValueError:
-        print("Invalid amount. Please enter a number.")
+        print("Invalid amount. Please enter a valid number.")
         return
 
     if amount > balance:
@@ -51,7 +64,7 @@ def deposit():
     try:
         amount = float(input("How much would you like to deposit? "))
     except ValueError:
-        print("Invalid amount. Please enter a number.")
+        print("Invalid amount. Please enter a valid number.")
         return
 
     if amount <= 0:
@@ -62,10 +75,10 @@ def deposit():
 
 def display_balance():
     global balance
-    print("Your balance is $%.2f" % balance)
+    print("Your current balance is $%.2f" % balance)
 
 # Initialize balance
-balance = 100.00
+balance = 0.00
 
 # Run the ATM system
 atm()
